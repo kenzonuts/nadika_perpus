@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Policies;
+
+use App\Models\User;
+
+class SettingsPolicy
+{
+    public function view(User $user): bool { return $user->can('settings.view'); }
+    public function update(User $user): bool { return $user->can('settings.update'); }
+}

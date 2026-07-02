@@ -1,55 +1,77 @@
 # Nadika Perpus
 
-Smart Secure Library Management System — Laravel 11 + Blade + Tailwind CSS + Alpine.js.
+Smart Secure Library Management System — Enterprise Laravel backend + Blade + Tailwind + Alpine.js.
+
+## Stack
+
+- Laravel 11 (PHP 8.3 — upgrade ke Laravel 12 butuh PHP 8.4)
+- PostgreSQL (Supabase)
+- Spatie Permission + Activitylog
+- Laravel Sanctum, Maatwebsite Excel
+- Service → Repository → Model architecture
 
 ## Requirements
 
-- PHP 8.3+
-- Composer
-- Node.js 18+
-- PHP extensions: `xml`, `mbstring`, `curl`, `zip`, `pdo` (recommended: `php8.3-xml`, `php8.3-sqlite3`)
+```bash
+sudo apt install php8.3-xml php8.3-pgsql php8.3-mbstring php8.3-zip php8.3-curl
+```
+
+Atau gunakan `./artisan-dev` (bundled extensions di `.php/extensions/`).
 
 ## Setup
 
+### 1. Environment
+
 ```bash
-# Install PHP dependencies (already included if vendor/ exists)
-composer install
-
-# Environment
 cp .env.example .env
-php artisan key:generate   # or use ./artisan-dev key:generate
+# Isi DB_* dengan kredensial Supabase PostgreSQL
+# Atau pakai Docker lokal:
+docker compose up -d
+# Lalu di .env: DB_HOST=127.0.0.1 DB_PORT=5433 DB_DATABASE=nadika DB_USERNAME=nadika DB_PASSWORD=nadika DB_SSLMODE=prefer
+```
 
-# Frontend
-npm install
+### 2. Database
+
+```bash
+./artisan-dev migrate:fresh --seed
+```
+
+### 3. Run
+
+```bash
+# Terminal 1
 npm run dev
 
-# Laravel server (terminal terpisah)
+# Terminal 2
 ./artisan-dev serve
 ```
 
-Buka aplikasi di **http://localhost:8000** (bukan port 5173 — itu hanya Vite).
+Buka **http://localhost:8000**
 
-## PHP XML extension
+## Default accounts (after seed)
 
-Jika `php artisan` error `Class "DOMDocument" not found`, install ekstensi XML:
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@library.local | Password123! |
+| Librarian | librarian@library.local | Password123! |
+| Member | member@library.local | Password123! |
 
-```bash
-sudo apt install php8.3-xml php8.3-sqlite3
+## Architecture
+
+```
+app/
+├── Actions/          DTO/              Enums/
+├── Events/           Exceptions/       Helpers/
+├── Http/Controllers/ Http/Requests/    Http/Middleware/
+├── Jobs/             Listeners/        Models/
+├── Observers/        Policies/         Repositories/
+├── Services/         ViewModels/       Support/
 ```
 
-Atau gunakan wrapper `./artisan-dev` yang sudah memuat ekstensi dari `.php/extensions/`.
+## Docs
 
-## Development
+Lihat [`doc.md`](doc.md) untuk master plan dan [`docs/`](docs/) untuk prompt per fase.
 
-Jalankan **dua terminal** bersamaan:
+## API
 
-| Terminal | Perintah | URL |
-|----------|----------|-----|
-| 1 | `npm run dev` | Vite HMR (port 5173) |
-| 2 | `./artisan-dev serve` | Laravel app (port 8000) |
-
-## Project structure
-
-- `resources/views/` — Blade templates (UI sudah jadi, masih dummy data)
-- `routes/web.php` — Route definitions (`Route::view` sementara)
-- `app/` — Controllers, Models (belum diisi — langkah berikutnya: backend)
+Health check: `GET /api/v1/health`

@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('categories.partials.sample-data')
 
 @php $category = $categories[0]; @endphp
 

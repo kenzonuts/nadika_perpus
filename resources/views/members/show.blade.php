@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('members.partials.sample-data')
 
 @php
     $member = $members[0];

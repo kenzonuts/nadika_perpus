@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('borrowings.partials.sample-data')
 
 @php $borrowing = $borrowings[0]; $badge = $statusBadgeMap[$borrowing['status']]; @endphp
 

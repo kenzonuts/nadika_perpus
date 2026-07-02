@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('audit.partials.sample-data')
 
 @php $log = $auditLogs[0]; @endphp
 

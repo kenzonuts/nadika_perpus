@@ -169,16 +169,16 @@ npm run dev
 
 ## Checklist Progress
 
-- [ ] Fase 0 — Prerequisites
-- [ ] Fase 1 — Foundation
-- [ ] Fase 2 — Database
-- [ ] Fase 3 — Auth
-- [ ] Fase 4 — Master Data
-- [ ] Fase 5 — Transactions
-- [ ] Fase 6 — Dashboard & Reports
-- [ ] Fase 7 — Settings & Profile
-- [ ] Fase 8 — Book Import
-- [ ] Fase 9 — Frontend Integration
+- [x] Fase 0 — Prerequisites (Laravel 11 + packages; Laravel 12 butuh PHP 8.4)
+- [x] Fase 1 — Foundation
+- [x] Fase 2 — Database (migrations, models, seeders)
+- [x] Fase 3 — Auth
+- [x] Fase 4 — Master Data
+- [x] Fase 5 — Transactions
+- [x] Fase 6 — Dashboard & Reports
+- [x] Fase 7 — Settings & Profile
+- [x] Fase 8 — Book Import
+- [x] Fase 9 — Frontend Integration (sample-data dihapus dari views)
 
 ---
 

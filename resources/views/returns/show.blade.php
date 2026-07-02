@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('returns.partials.sample-data')
 
 @php
     $return = $returns[0];

@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nadika-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: nadika
+      POSTGRES_USER: nadika
+      POSTGRES_PASSWORD: nadika
+    volumes:
+      - nadika_pgdata:/var/lib/postgresql/data
+
+volumes:
+  nadika_pgdata:

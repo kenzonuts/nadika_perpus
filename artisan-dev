@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+export COMPOSER_DISABLE_PLATFORM_CHECK=1
 export PHP_INI_SCAN_DIR="/etc/php/8.3/cli/conf.d:$(cd "$(dirname "$0")" && pwd)/.php/conf.d"
 exec php "$(cd "$(dirname "$0")" && pwd)/artisan" "$@"

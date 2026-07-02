@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('books.partials.sample-data')
 
 @php $book = $books[0]; @endphp
 

@@ -1,6 +1,5 @@
 @extends('layouts.dashboard')
 
-@include('books.partials.sample-data')
 
 @section('breadcrumb')
     <x-dashboard.breadcrumb :items="[

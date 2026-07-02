@@ -1,76 +1,71 @@
 <?php
 
+declare(strict_types=1);
+
+use App\Http\Controllers\AuditController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookImportController;
+use App\Http\Controllers\BookReturnController;
+use App\Http\Controllers\BorrowingController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'landing.index');
+Route::get('/', LandingController::class);
 
-// Auth
-Route::view('/login', 'auth.login')->name('login');
-Route::view('/register', 'auth.register')->name('register');
-Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
-Route::view('/reset-password', 'auth.reset-password')->name('password.reset');
-Route::view('/verify-email', 'auth.verify-email')->name('verification.notice');
-Route::view('/confirm-password', 'auth.confirm-password')->name('password.confirm');
-Route::view('/two-factor', 'auth.two-factor')->name('two-factor');
+require __DIR__.'/auth.php';
 
-// Dashboard
-Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function (): void {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
-// Books
-Route::view('/books', 'books.index')->name('books.index');
-Route::view('/books/create', 'books.create')->name('books.create');
-Route::view('/books/import', 'books.import')->name('books.import');
-Route::view('/books/trash', 'books.trash')->name('books.trash');
-Route::view('/books/{id}', 'books.show')->name('books.show');
-Route::view('/books/{id}/edit', 'books.edit')->name('books.edit');
+    Route::get('/books/trash', [BookController::class, 'trash'])->name('books.trash');
+    Route::post('/books/{id}/restore', [BookController::class, 'restore'])->name('books.restore');
+    Route::delete('/books/{id}/force-delete', [BookController::class, 'forceDelete'])->name('books.force-delete');
+    Route::get('/books/import', [BookImportController::class, 'create'])->name('books.import');
+    Route::post('/books/import', [BookImportController::class, 'store'])->name('books.import.store');
+    Route::resource('books', BookController::class);
 
-// Categories
-Route::view('/categories', 'categories.index')->name('categories.index');
-Route::view('/categories/create', 'categories.create')->name('categories.create');
-Route::view('/categories/trash', 'categories.trash')->name('categories.trash');
-Route::view('/categories/{id}', 'categories.show')->name('categories.show');
-Route::view('/categories/{id}/edit', 'categories.edit')->name('categories.edit');
+    Route::get('/categories/trash', [CategoryController::class, 'trash'])->name('categories.trash');
+    Route::post('/categories/{id}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
+    Route::resource('categories', CategoryController::class);
 
-// Members
-Route::view('/members', 'members.index')->name('members.index');
-Route::view('/members/create', 'members.create')->name('members.create');
-Route::view('/members/trash', 'members.trash')->name('members.trash');
-Route::view('/members/{id}', 'members.show')->name('members.show');
-Route::view('/members/{id}/edit', 'members.edit')->name('members.edit');
+    Route::get('/members/trash', [MemberController::class, 'trash'])->name('members.trash');
+    Route::resource('members', MemberController::class);
 
-// Borrowings
-Route::view('/borrowings', 'borrowings.index')->name('borrowings.index');
-Route::view('/borrowings/create', 'borrowings.create')->name('borrowings.create');
-Route::view('/borrowings/history', 'borrowings.history')->name('borrowings.history');
-Route::view('/borrowings/{id}', 'borrowings.show')->name('borrowings.show');
+    Route::get('/borrowings/history', [BorrowingController::class, 'history'])->name('borrowings.history');
+    Route::resource('borrowings', BorrowingController::class)->except(['destroy']);
 
-// Returns
-Route::view('/returns', 'returns.index')->name('returns.index');
-Route::view('/returns/{id}', 'returns.show')->name('returns.show');
+    Route::get('/returns', [BookReturnController::class, 'index'])->name('returns.index');
+    Route::post('/returns', [BookReturnController::class, 'store'])->name('returns.store');
+    Route::get('/returns/{bookReturn}', [BookReturnController::class, 'show'])->name('returns.show');
 
-// Reports
-Route::view('/reports', 'reports.index')->name('reports.index');
-Route::view('/reports/books', 'reports.books')->name('reports.books');
-Route::view('/reports/members', 'reports.members')->name('reports.members');
-Route::view('/reports/borrowings', 'reports.borrowings')->name('reports.borrowings');
-Route::view('/reports/fines', 'reports.fines')->name('reports.fines');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/books', [ReportController::class, 'books'])->name('reports.books');
+    Route::get('/reports/members', [ReportController::class, 'members'])->name('reports.members');
+    Route::get('/reports/borrowings', [ReportController::class, 'borrowings'])->name('reports.borrowings');
+    Route::get('/reports/fines', [ReportController::class, 'fines'])->name('reports.fines');
 
-// Audit Logs
-Route::view('/audit', 'audit.index')->name('audit.index');
-Route::view('/audit/{id}', 'audit.show')->name('audit.show');
+    Route::get('/audit', [AuditController::class, 'index'])->name('audit.index');
+    Route::get('/audit/{id}', [AuditController::class, 'show'])->name('audit.show');
 
-// Profile
-Route::view('/profile', 'profile.index')->name('profile.index');
-Route::view('/profile/security', 'profile.security')->name('profile.security');
-Route::view('/profile/activity', 'profile.activity')->name('profile.activity');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/security', [ProfileController::class, 'security'])->name('profile.security');
+    Route::get('/profile/activity', [ProfileController::class, 'activity'])->name('profile.activity');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 
-// Settings
-Route::view('/settings/general', 'settings.general')->name('settings.general');
-Route::view('/settings/library', 'settings.library')->name('settings.library');
-Route::view('/settings/security', 'settings.security')->name('settings.security');
-Route::view('/settings/notifications', 'settings.notifications')->name('settings.notifications');
-Route::view('/settings/system', 'settings.system')->name('settings.system');
+    Route::get('/settings/general', [SettingsController::class, 'general'])->name('settings.general');
+    Route::get('/settings/library', [SettingsController::class, 'library'])->name('settings.library');
+    Route::get('/settings/security', [SettingsController::class, 'security'])->name('settings.security');
+    Route::get('/settings/notifications', [SettingsController::class, 'notifications'])->name('settings.notifications');
+    Route::get('/settings/system', [SettingsController::class, 'system'])->name('settings.system');
+    Route::patch('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
-// Settings & profile redirects
-Route::redirect('/settings', '/settings/general');
-Route::redirect('/reports/analytics', '/reports');
+    Route::redirect('/settings', '/settings/general');
+    Route::redirect('/reports/analytics', '/reports');
+});
