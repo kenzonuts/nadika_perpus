@@ -339,4 +339,61 @@ Alpine.data('countdown', (seconds = 60) => ({
     },
 }));
 
+Alpine.data('moduleIndex', () => ({
+    loading: false,
+    searchQuery: '',
+    showFilters: false,
+    deleteModalOpen: false,
+    createModalOpen: false,
+    selectedItem: null,
+    activeRowMenu: null,
+
+    refresh() {
+        this.loading = true;
+        setTimeout(() => { this.loading = false; }, 1000);
+    },
+
+    openDeleteModal(item) {
+        this.selectedItem = item;
+        this.deleteModalOpen = true;
+        this.activeRowMenu = null;
+    },
+
+    closeDeleteModal() {
+        this.deleteModalOpen = false;
+        this.selectedItem = null;
+    },
+
+    toggleRowMenu(id) {
+        this.activeRowMenu = this.activeRowMenu === id ? null : id;
+    },
+
+    closeRowMenu() {
+        this.activeRowMenu = null;
+    },
+}));
+
+Alpine.data('memberForm', (initial = {}) => ({
+    form: {
+        name: initial.name || '',
+        email: initial.email || '',
+        phone: initial.phone || '',
+        membership_type: initial.membership_type || 'Standard',
+        status: initial.status || 'active',
+        join_date: initial.join_date || '',
+        address: initial.address || '',
+        notes: initial.notes || '',
+    },
+    dirty: false,
+
+    init() {
+        this.$watch('form', () => { this.dirty = true; }, { deep: true });
+        window.addEventListener('beforeunload', (e) => {
+            if (this.dirty) { e.preventDefault(); e.returnValue = ''; }
+        });
+    },
+
+    markClean() { this.dirty = false; },
+}));
+
 Alpine.start();
