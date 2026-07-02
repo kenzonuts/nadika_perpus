@@ -28,7 +28,7 @@
     $borrowingTimeline = [
         ['icon' => 'arrow-right-circle', 'title' => 'Borrowing created', 'description' => 'Book checked out to member', 'time' => 'Jul 1, 2026 · 10:30 AM', 'color' => 'primary'],
         ['icon' => 'bell', 'title' => 'Due date reminder', 'description' => 'Automated reminder sent to member', 'time' => 'Jul 12, 2026 · 9:00 AM', 'color' => 'warning'],
-        ['icon' => 'document-text', 'title' => 'Note added', 'description' => 'Standard 14-day loan period recorded', 'time' => 'Jul 1, 2026 · 10:32 AM', 'color' => 'neutral'],
+        ['icon' => 'clipboard-document-list', 'title' => 'Note added', 'description' => 'Standard 14-day loan period recorded', 'time' => 'Jul 1, 2026 · 10:32 AM', 'color' => 'primary'],
     ];
 
     $members = [

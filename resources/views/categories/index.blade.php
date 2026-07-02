@@ -31,7 +31,7 @@
 
         {{-- Statistics --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Categories" value="24" icon="tag" color="primary" />
+            <x-dashboard.stat-card title="Total Categories" value="24" icon="rectangle-stack" color="primary" />
             <x-dashboard.stat-card title="Active Categories" value="18" icon="check-circle" color="success" />
             <x-dashboard.stat-card title="Draft Categories" value="3" icon="pencil-square" color="warning" />
             <x-dashboard.stat-card title="Books Categorized" value="1,728" icon="book-open" color="danger" />
@@ -88,7 +88,7 @@
                                         <td class="px-4 lg:px-6 py-4">
                                             <div class="flex items-center gap-3">
                                                 <div class="w-9 h-9 rounded-xl bg-gradient-to-br {{ $category['color'] }} flex items-center justify-center shrink-0">
-                                                    <x-ui.icon name="tag" class="w-4 h-4 text-white" />
+                                                    <x-ui.icon name="rectangle-stack" class="w-4 h-4 text-white" />
                                                 </div>
                                                 <div class="min-w-0">
                                                     <a href="{{ url('/categories/' . $category['id']) }}" class="font-medium text-secondary dark:text-white hover:text-primary transition-colors line-clamp-1">
@@ -136,7 +136,7 @@
                     <x-dashboard.empty-state
                         title="No categories yet"
                         description="Create your first category to organize books in your library."
-                        icon="tag"
+                        icon="rectangle-stack"
                         action="Add Category"
                         action-href="#"
                     />
@@ -215,7 +215,7 @@
             <template x-if="selectedItem">
                 <div class="flex items-center gap-4 p-4 bg-background dark:bg-white/5 rounded-xl">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br shrink-0 flex items-center justify-center" :class="selectedItem.color || 'from-primary to-primary-dark'">
-                        <x-ui.icon name="tag" class="w-4 h-4 text-white" />
+                        <x-ui.icon name="rectangle-stack" class="w-4 h-4 text-white" />
                     </div>
                     <div class="min-w-0">
                         <p class="text-sm font-medium text-secondary dark:text-white truncate" x-text="selectedItem.name"></p>
