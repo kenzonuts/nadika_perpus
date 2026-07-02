@@ -54,14 +54,23 @@ Alpine.data('formSubmit', () => ({
     loading: false,
 
     submit(event) {
-        event?.preventDefault();
-        if (this.loading) return;
+        if (this.loading) {
+            event.preventDefault();
+            return;
+        }
+
+        const form = event.target;
+        if (form.tagName !== 'FORM') {
+            return;
+        }
+
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            form.reportValidity();
+            return;
+        }
 
         this.loading = true;
-
-        setTimeout(() => {
-            this.loading = false;
-        }, 2000);
     },
 }));
 

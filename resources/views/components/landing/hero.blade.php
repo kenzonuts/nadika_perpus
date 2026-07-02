@@ -24,7 +24,7 @@
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-4">
-                    <x-ui.button variant="primary" size="lg" href="#register">
+                    <x-ui.button variant="primary" size="lg" href="{{ route('register') }}">
                         Get Started
                         <x-ui.icon name="arrow-right" class="w-4 h-4" />
                     </x-ui.button>

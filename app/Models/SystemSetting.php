@@ -1,17 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-class SystemSetting extends BaseModel
+use App\Support\Concerns\HasUuid;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class SystemSetting extends Model
 {
+    use HasFactory, HasUuid;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
     protected $fillable = [
         'key',
         'value',
         'group',
     ];
-
-    public function getActivityLogName(): string
-    {
-        return 'system_setting';
-    }
 }

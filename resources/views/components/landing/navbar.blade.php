@@ -24,8 +24,8 @@
 
             {{-- Desktop Buttons --}}
             <div class="hidden lg:flex items-center gap-3">
-                <x-ui.button variant="ghost" size="sm" href="#login" id="login">Login</x-ui.button>
-                <x-ui.button variant="primary" size="sm" href="#register">Register</x-ui.button>
+                <x-ui.button variant="ghost" size="sm" href="{{ route('login') }}" id="login">Login</x-ui.button>
+                <x-ui.button variant="primary" size="sm" href="{{ route('register') }}">Register</x-ui.button>
             </div>
 
             {{-- Mobile Menu Button --}}
@@ -59,8 +59,8 @@
             <a @click="closeMobile()" href="#about" class="block px-4 py-3 text-sm font-medium text-secondary/70 hover:text-primary hover:bg-background rounded-xl transition-colors">About</a>
             <a @click="closeMobile()" href="#contact" class="block px-4 py-3 text-sm font-medium text-secondary/70 hover:text-primary hover:bg-background rounded-xl transition-colors">Contact</a>
             <div class="pt-4 flex flex-col gap-2">
-                <x-ui.button variant="outline" size="sm" href="#login" class="w-full">Login</x-ui.button>
-                <x-ui.button variant="primary" size="sm" href="#register" class="w-full">Register</x-ui.button>
+                <x-ui.button variant="outline" size="sm" href="{{ route('login') }}" class="w-full">Login</x-ui.button>
+                <x-ui.button variant="primary" size="sm" href="{{ route('register') }}" class="w-full">Register</x-ui.button>
             </div>
         </div>
     </div>

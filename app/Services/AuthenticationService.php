@@ -7,7 +7,6 @@ namespace App\Services;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Support\Facades\Hash;
 
 class AuthenticationService extends BaseService
 {
@@ -19,8 +18,10 @@ class AuthenticationService extends BaseService
             'name' => $attributes['name'],
             'email' => $attributes['email'],
             'phone' => $attributes['phone'] ?? null,
-            'password' => Hash::make($attributes['password']),
+            'password' => $attributes['password'],
         ]);
+
+        $user->assignRole('member');
 
         event(new Registered($user));
         $this->guard->login($user);

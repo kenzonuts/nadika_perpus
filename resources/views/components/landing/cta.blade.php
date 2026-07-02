@@ -16,7 +16,7 @@
                 </p>
 
                 <div class="mt-8 flex flex-wrap justify-center gap-4">
-                    <x-ui.button variant="white" size="lg" href="#register" id="register">
+                    <x-ui.button variant="white" size="lg" href="{{ route('register') }}" id="register">
                         Get Started Free
                         <x-ui.icon name="arrow-right" class="w-4 h-4" />
                     </x-ui.button>
