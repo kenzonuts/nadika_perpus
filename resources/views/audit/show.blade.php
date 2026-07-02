@@ -51,7 +51,7 @@
                             title="Notification sent"
                             description="Catalog update notification sent to 12 subscribed members"
                             time="14:32:22"
-                            color="neutral"
+                            color="primary"
                         />
                         <x-dashboard.timeline-item
                             icon="clipboard-document-check"

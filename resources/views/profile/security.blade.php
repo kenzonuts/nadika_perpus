@@ -40,9 +40,10 @@
                         <p class="mt-1 text-sm text-secondary/50 dark:text-white/50">
                             Use an authenticator app like Google Authenticator or Authy to generate verification codes.
                         </p>
-                        <x-ui.badge :variant="false ? 'success' : 'neutral'" class="mt-2" x-bind:class="twoFactorEnabled ? '' : ''">
-                            <span x-text="twoFactorEnabled ? 'Enabled' : 'Disabled'"></span>
-                        </x-ui.badge>
+                        <span class="mt-2 inline-block">
+                            <x-ui.badge variant="success" x-show="twoFactorEnabled" x-cloak>Enabled</x-ui.badge>
+                            <x-ui.badge variant="neutral" x-show="!twoFactorEnabled">Disabled</x-ui.badge>
+                        </span>
                     </div>
                 </div>
                 <button
