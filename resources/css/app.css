@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-primary-light: #3b82f6;
+    --color-secondary: #0f172a;
+    --color-background: #f8fafc;
+    --color-card: #ffffff;
+    --color-border: #e5e7eb;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-background text-secondary antialiased;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer utilities {
+    .glass {
+        @apply bg-white/70 backdrop-blur-xl border border-white/20;
+    }
+
+    .glass-dark {
+        @apply bg-secondary/80 backdrop-blur-xl border border-white/10;
+    }
+
+    .shadow-soft {
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 4px 24px -2px rgb(0 0 0 / 0.06);
+    }
+
+    .shadow-soft-lg {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.04), 0 12px 40px -4px rgb(0 0 0 / 0.08);
+    }
+
+    .shadow-soft-xl {
+        box-shadow: 0 8px 16px -4px rgb(0 0 0 / 0.06), 0 24px 64px -8px rgb(0 0 0 / 0.1);
+    }
+
+    .animate-fade-up {
+        animation: fadeUp 0.6s ease-out forwards;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+        animation: float 6s ease-in-out 2s infinite;
+    }
+
+    .animate-float-slow {
+        animation: float 8s ease-in-out 1s infinite;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+}
