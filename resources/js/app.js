@@ -54,7 +54,7 @@ Alpine.data('formSubmit', () => ({
     loading: false,
 
     submit(event) {
-        event.preventDefault();
+        event?.preventDefault();
         if (this.loading) return;
 
         this.loading = true;
@@ -112,6 +112,78 @@ Alpine.data('otpInput', (length = 6) => ({
         const inputs = this.getInputs();
         const focusIndex = Math.min(paste.length, length - 1);
         inputs[focusIndex]?.focus();
+    },
+}));
+
+Alpine.data('dashboard', () => ({
+    sidebarCollapsed: false,
+    mobileSidebarOpen: false,
+    darkMode: false,
+    searchOpen: false,
+    activeDropdown: null,
+
+    init() {
+        this.sidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        this.darkMode = localStorage.getItem('darkMode') === 'true';
+
+        if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                this.searchOpen = true;
+            }
+            if (e.key === 'Escape') {
+                this.searchOpen = false;
+                this.activeDropdown = null;
+                this.mobileSidebarOpen = false;
+            }
+        });
+    },
+
+    toggleSidebar() {
+        this.sidebarCollapsed = !this.sidebarCollapsed;
+        localStorage.setItem('sidebarCollapsed', this.sidebarCollapsed);
+    },
+
+    toggleMobileSidebar() {
+        this.mobileSidebarOpen = !this.mobileSidebarOpen;
+    },
+
+    closeMobileSidebar() {
+        this.mobileSidebarOpen = false;
+    },
+
+    toggleDarkMode() {
+        this.darkMode = !this.darkMode;
+        document.documentElement.classList.toggle('dark', this.darkMode);
+        localStorage.setItem('darkMode', this.darkMode);
+    },
+
+    toggleSearch() {
+        this.searchOpen = !this.searchOpen;
+    },
+
+    openDropdown(name) {
+        this.activeDropdown = this.activeDropdown === name ? null : name;
+    },
+
+    closeDropdowns() {
+        this.activeDropdown = null;
+    },
+
+    isDropdownOpen(name) {
+        return this.activeDropdown === name;
+    },
+}));
+
+Alpine.data('sidebarGroup', (defaultOpen = false) => ({
+    open: defaultOpen,
+
+    toggle() {
+        this.open = !this.open;
     },
 }));
 
