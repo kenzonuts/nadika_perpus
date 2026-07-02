@@ -1,8 +1,8 @@
-<div x-data="fileUpload" {{ $attributes }}>
+<div {{ $attributes }}>
     <x-ui.label>Book Cover</x-ui.label>
 
     <div
-        x-show="!preview"
+        x-show="!coverPreview"
         @dragover.prevent="dragOver = true"
         @dragleave.prevent="dragOver = false"
         @drop.prevent="handleDrop($event)"
@@ -17,15 +17,15 @@
         <p class="mt-1 text-xs text-secondary/50 dark:text-white/50">PNG, JPG up to 5MB</p>
     </div>
 
-    <div x-show="preview" x-cloak class="relative mt-1.5">
-        <img :src="preview" alt="Cover preview" class="w-full max-h-64 object-cover rounded-2xl border border-border dark:border-white/10" />
+    <div x-show="coverPreview" x-cloak class="relative mt-1.5">
+        <img :src="coverPreview" alt="Cover preview" class="w-full max-h-64 object-cover rounded-2xl border border-border dark:border-white/10" />
 
         <div x-show="uploading" class="absolute inset-0 bg-secondary/50 rounded-2xl flex items-center justify-center">
             <div class="w-48">
                 <div class="h-1.5 bg-white/20 rounded-full overflow-hidden">
-                    <div class="h-full bg-primary rounded-full transition-all duration-100" :style="'width:' + progress + '%'"></div>
+                    <div class="h-full bg-primary rounded-full transition-all duration-100" :style="'width:' + uploadProgress + '%'"></div>
                 </div>
-                <p class="text-xs text-white text-center mt-2" x-text="progress + '%'"></p>
+                <p class="text-xs text-white text-center mt-2" x-text="uploadProgress + '%'"></p>
             </div>
         </div>
 
@@ -36,7 +36,7 @@
                     <x-ui.icon name="arrow-path-rounded" class="w-4 h-4" /> Replace
                 </span>
             </label>
-            <button type="button" @click="remove()" class="px-4 py-2 text-sm font-medium text-danger border border-danger/20 rounded-xl hover:bg-danger/5 transition-colors">
+            <button type="button" @click="removeCover()" class="px-4 py-2 text-sm font-medium text-danger border border-danger/20 rounded-xl hover:bg-danger/5 transition-colors">
                 Remove
             </button>
         </div>

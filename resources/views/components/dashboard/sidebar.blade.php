@@ -44,7 +44,7 @@
         />
 
         <x-dashboard.sidebar-group label="Library" icon="book-open" :default-open="str_starts_with($currentPath, 'books') || str_starts_with($currentPath, 'categories') || str_starts_with($currentPath, 'shelves')">
-            <x-dashboard.sidebar-item href="#" label="Books" icon="book" class="!py-2 !px-2" />
+            <x-dashboard.sidebar-item href="{{ url('/books') }}" label="Books" icon="book" class="!py-2 !px-2" :active="request()->is('books*')" />
             <x-dashboard.sidebar-item href="#" label="Categories" icon="rectangle-stack" class="!py-2 !px-2" />
             <x-dashboard.sidebar-item href="#" label="Shelves" icon="archive-box" class="!py-2 !px-2" />
         </x-dashboard.sidebar-group>

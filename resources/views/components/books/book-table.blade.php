@@ -45,12 +45,7 @@
                         </td>
                         <td class="px-4 lg:px-6 py-4 text-xs text-secondary/40 dark:text-white/40 hidden lg:table-cell">{{ $book['updated_at'] }}</td>
                         <td class="px-4 lg:px-6 py-4 text-right">
-                            <x-books.action-dropdown
-                                :book-id="$book['id']"
-                                book-title="{{ $book['title'] }}"
-                                book-author="{{ $book['author'] }}"
-                                book-color="{{ $book['color'] }}"
-                            />
+                            <x-books.action-dropdown :book-id="$book['id']" :book="$book" />
                         </td>
                     </tr>
                 @endforeach

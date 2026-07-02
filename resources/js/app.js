@@ -196,6 +196,7 @@ Alpine.data('booksIndex', () => ({
     selectedBook: null,
     activeRowMenu: null,
     recentSearches: ['Clean Code', 'Programming', 'Robert Martin'],
+    showSuggestions: false,
 
     setViewMode(mode) {
         this.viewMode = mode;
@@ -245,6 +246,9 @@ Alpine.data('bookForm', (initial = {}) => ({
   },
   dirty: false,
   coverPreview: null,
+  dragOver: false,
+  uploading: false,
+  uploadProgress: 0,
 
   init() {
     this.$watch('form', () => { this.dirty = true; }, { deep: true });
@@ -254,13 +258,6 @@ Alpine.data('bookForm', (initial = {}) => ({
   },
 
   markClean() { this.dirty = false; },
-}));
-
-Alpine.data('fileUpload', () => ({
-  dragOver: false,
-  preview: null,
-  uploading: false,
-  progress: 0,
 
   handleDrop(e) {
     this.dragOver = false;
@@ -276,17 +273,17 @@ Alpine.data('fileUpload', () => ({
   processFile(file) {
     if (!file.type.startsWith('image/')) return;
     const reader = new FileReader();
-    reader.onload = (e) => { this.preview = e.target.result; };
+    reader.onload = (ev) => { this.coverPreview = ev.target.result; };
     reader.readAsDataURL(file);
     this.uploading = true;
-    this.progress = 0;
+    this.uploadProgress = 0;
     const interval = setInterval(() => {
-      this.progress += 10;
-      if (this.progress >= 100) { clearInterval(interval); this.uploading = false; }
+      this.uploadProgress += 10;
+      if (this.uploadProgress >= 100) { clearInterval(interval); this.uploading = false; }
     }, 100);
   },
 
-  remove() { this.preview = null; this.progress = 0; },
+  removeCover() { this.coverPreview = null; this.uploadProgress = 0; },
 }));
 
 Alpine.data('importBooks', () => ({

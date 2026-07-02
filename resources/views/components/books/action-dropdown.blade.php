@@ -1,7 +1,8 @@
-@props(['bookId' => null])
+@props(['bookId' => null, 'book' => []])
 
 @php
     $menuId = 'book-menu-' . ($bookId ?? uniqid());
+    $bookData = !empty($book) ? $book : ['id' => $bookId, 'title' => 'Book', 'author' => '', 'color' => 'from-primary to-primary-dark'];
 @endphp
 
 <div class="relative" @click.outside="closeRowMenu()">
@@ -39,7 +40,7 @@
                 type="button"
                 class="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-danger hover:bg-danger/5 text-left"
                 role="menuitem"
-                @click="openDeleteModal({ id: {{ $bookId }}, title: '{{ addslashes($attributes->get('book-title', 'Book')) }}', author: '{{ addslashes($attributes->get('book-author', '')) }}', color: '{{ $attributes->get('book-color', 'from-primary to-primary-dark') }}' })"
+                @click="openDeleteModal(@json($bookData))"
             >
                 <x-ui.icon name="trash" class="w-4 h-4" /> Delete
             </button>
