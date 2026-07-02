@@ -187,6 +187,129 @@ Alpine.data('sidebarGroup', (defaultOpen = false) => ({
     },
 }));
 
+Alpine.data('booksIndex', () => ({
+    viewMode: localStorage.getItem('booksViewMode') || 'table',
+    loading: false,
+    searchQuery: '',
+    showFilters: false,
+    deleteModalOpen: false,
+    selectedBook: null,
+    activeRowMenu: null,
+    recentSearches: ['Clean Code', 'Programming', 'Robert Martin'],
+
+    setViewMode(mode) {
+        this.viewMode = mode;
+        localStorage.setItem('booksViewMode', mode);
+    },
+
+    refresh() {
+        this.loading = true;
+        setTimeout(() => { this.loading = false; }, 1200);
+    },
+
+    openDeleteModal(book) {
+        this.selectedBook = book;
+        this.deleteModalOpen = true;
+        this.activeRowMenu = null;
+    },
+
+    closeDeleteModal() {
+        this.deleteModalOpen = false;
+        this.selectedBook = null;
+    },
+
+    toggleRowMenu(id) {
+        this.activeRowMenu = this.activeRowMenu === id ? null : id;
+    },
+
+    closeRowMenu() {
+        this.activeRowMenu = null;
+    },
+}));
+
+Alpine.data('bookForm', (initial = {}) => ({
+  form: {
+    title: initial.title || '',
+    subtitle: initial.subtitle || '',
+    isbn: initial.isbn || '',
+    author: initial.author || '',
+    publisher: initial.publisher || '',
+    year: initial.year || '',
+    category: initial.category || '',
+    shelf: initial.shelf || '',
+    language: initial.language || 'English',
+    pages: initial.pages || '',
+    stock: initial.stock || 1,
+    description: initial.description || '',
+    status: initial.status || 'published',
+  },
+  dirty: false,
+  coverPreview: null,
+
+  init() {
+    this.$watch('form', () => { this.dirty = true; }, { deep: true });
+    window.addEventListener('beforeunload', (e) => {
+      if (this.dirty) { e.preventDefault(); e.returnValue = ''; }
+    });
+  },
+
+  markClean() { this.dirty = false; },
+}));
+
+Alpine.data('fileUpload', () => ({
+  dragOver: false,
+  preview: null,
+  uploading: false,
+  progress: 0,
+
+  handleDrop(e) {
+    this.dragOver = false;
+    const file = e.dataTransfer?.files?.[0];
+    if (file) this.processFile(file);
+  },
+
+  handleSelect(e) {
+    const file = e.target?.files?.[0];
+    if (file) this.processFile(file);
+  },
+
+  processFile(file) {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = (e) => { this.preview = e.target.result; };
+    reader.readAsDataURL(file);
+    this.uploading = true;
+    this.progress = 0;
+    const interval = setInterval(() => {
+      this.progress += 10;
+      if (this.progress >= 100) { clearInterval(interval); this.uploading = false; }
+    }, 100);
+  },
+
+  remove() { this.preview = null; this.progress = 0; },
+}));
+
+Alpine.data('importBooks', () => ({
+  step: 'upload',
+  progress: 0,
+  importing: false,
+  previewRows: [
+    { title: 'Clean Code', isbn: '978-0132350884', author: 'Robert C. Martin', status: 'valid' },
+    { title: 'Design Patterns', isbn: '978-0201633610', author: 'Gang of Four', status: 'valid' },
+    { title: 'Invalid Row', isbn: '', author: 'Unknown', status: 'error' },
+  ],
+
+  startImport() {
+    this.importing = true;
+    this.step = 'importing';
+    this.progress = 0;
+    const interval = setInterval(() => {
+      this.progress += 5;
+      if (this.progress >= 100) { clearInterval(interval); this.importing = false; this.step = 'complete'; }
+    }, 150);
+  },
+}));
+
 Alpine.data('countdown', (seconds = 60) => ({
     remaining: seconds,
     interval: null,

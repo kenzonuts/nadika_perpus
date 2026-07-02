@@ -11,3 +11,5 @@ Route::view('/reset-password', 'auth.reset-password')->name('password.reset');
 Route::view('/verify-email', 'auth.verify-email')->name('verification.notice');
 Route::view('/confirm-password', 'auth.confirm-password')->name('password.confirm');
 Route::view('/two-factor', 'auth.two-factor')->name('two-factor');
+
+Route::view('/dashboard', 'dashboard.index')->name('dashboard');

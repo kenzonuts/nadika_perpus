@@ -11,7 +11,7 @@
                 <x-ui.icon name="bars-3" class="w-5 h-5" />
             </button>
 
-            {{ $breadcrumb ?? '' }}
+            {{ $breadcrumb ?? $slot }}
         </div>
 
         {{-- Center: Search (desktop) --}}

@@ -1,4 +1,5 @@
 {{-- Global Search Modal (Ctrl+K) --}}
+@once
 <div
     x-show="searchOpen"
     x-cloak
@@ -46,6 +47,7 @@
         </div>
     </div>
 </div>
+@endonce
 
 {{-- Search trigger button (for navbar) --}}
 <button
