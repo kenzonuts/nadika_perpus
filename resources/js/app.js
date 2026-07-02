@@ -50,4 +50,101 @@ Alpine.data('navbar', () => ({
     },
 }));
 
+Alpine.data('formSubmit', () => ({
+    loading: false,
+
+    submit(event) {
+        event.preventDefault();
+        if (this.loading) return;
+
+        this.loading = true;
+
+        setTimeout(() => {
+            this.loading = false;
+        }, 2000);
+    },
+}));
+
+Alpine.data('otpInput', (length = 6) => ({
+    digits: Array.from({ length }, () => ''),
+
+    get value() {
+        return this.digits.join('');
+    },
+
+    getInputs() {
+        return this.$refs.otpGroup?.querySelectorAll('input') ?? [];
+    },
+
+    handleInput(event, index) {
+        const val = event.target.value.replace(/\D/g, '').slice(-1);
+        this.digits[index] = val;
+        event.target.value = val;
+
+        if (val && index < length - 1) {
+            this.getInputs()[index + 1]?.focus();
+        }
+    },
+
+    handleKeydown(event, index) {
+        if (event.key === 'Backspace' && !this.digits[index] && index > 0) {
+            this.getInputs()[index - 1]?.focus();
+        }
+
+        if (event.key === 'ArrowLeft' && index > 0) {
+            event.preventDefault();
+            this.getInputs()[index - 1]?.focus();
+        }
+
+        if (event.key === 'ArrowRight' && index < length - 1) {
+            event.preventDefault();
+            this.getInputs()[index + 1]?.focus();
+        }
+    },
+
+    handlePaste(event) {
+        const paste = event.clipboardData.getData('text').replace(/\D/g, '').slice(0, length);
+
+        paste.split('').forEach((char, i) => {
+            this.digits[i] = char;
+        });
+
+        const inputs = this.getInputs();
+        const focusIndex = Math.min(paste.length, length - 1);
+        inputs[focusIndex]?.focus();
+    },
+}));
+
+Alpine.data('countdown', (seconds = 60) => ({
+    remaining: seconds,
+    interval: null,
+
+    init() {
+        this.start();
+    },
+
+    start() {
+        this.remaining = seconds;
+        clearInterval(this.interval);
+
+        this.interval = setInterval(() => {
+            if (this.remaining > 0) {
+                this.remaining--;
+            } else {
+                clearInterval(this.interval);
+            }
+        }, 1000);
+    },
+
+    get formatted() {
+        const mins = Math.floor(this.remaining / 60);
+        const secs = this.remaining % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    },
+
+    get expired() {
+        return this.remaining === 0;
+    },
+}));
+
 Alpine.start();
