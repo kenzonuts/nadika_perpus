@@ -43,30 +43,38 @@
             :active="request()->is('dashboard')"
         />
 
-        <x-dashboard.sidebar-group label="Library" icon="book-open" :default-open="str_starts_with($currentPath, 'books') || str_starts_with($currentPath, 'categories') || str_starts_with($currentPath, 'shelves')">
+        <x-dashboard.sidebar-group label="Library" icon="book-open" :default-open="str_starts_with($currentPath, 'books') || str_starts_with($currentPath, 'categories')">
             <x-dashboard.sidebar-item href="{{ url('/books') }}" label="Books" icon="book" class="!py-2 !px-2" :active="request()->is('books*')" />
-            <x-dashboard.sidebar-item href="#" label="Categories" icon="rectangle-stack" class="!py-2 !px-2" />
-            <x-dashboard.sidebar-item href="#" label="Shelves" icon="archive-box" class="!py-2 !px-2" />
+            <x-dashboard.sidebar-item href="{{ url('/categories') }}" label="Categories" icon="rectangle-stack" class="!py-2 !px-2" :active="request()->is('categories*')" />
         </x-dashboard.sidebar-group>
 
-        <x-dashboard.sidebar-item href="#" icon="users" label="Members" />
+        <x-dashboard.sidebar-item
+            href="{{ url('/members') }}"
+            icon="users"
+            label="Members"
+            :active="request()->is('members*')"
+        />
 
-        <x-dashboard.sidebar-group label="Transactions" icon="arrow-path" :default-open="false">
-            <x-dashboard.sidebar-item href="#" label="Borrowings" icon="arrow-right-circle" class="!py-2 !px-2" />
-            <x-dashboard.sidebar-item href="#" label="Returns" icon="arrow-left-circle" class="!py-2 !px-2" />
+        <x-dashboard.sidebar-group label="Transactions" icon="arrow-path" :default-open="str_starts_with($currentPath, 'borrowings') || str_starts_with($currentPath, 'returns')">
+            <x-dashboard.sidebar-item href="{{ url('/borrowings') }}" label="Borrowings" icon="arrow-right-circle" class="!py-2 !px-2" :active="request()->is('borrowings*')" />
+            <x-dashboard.sidebar-item href="{{ url('/returns') }}" label="Returns" icon="arrow-left-circle" class="!py-2 !px-2" :active="request()->is('returns*')" />
         </x-dashboard.sidebar-group>
 
-        <x-dashboard.sidebar-group label="Reports" icon="document-chart-bar" :default-open="false">
-            <x-dashboard.sidebar-item href="#" label="Analytics" icon="chart-pie" class="!py-2 !px-2" />
+        <x-dashboard.sidebar-group label="Reports" icon="document-chart-bar" :default-open="str_starts_with($currentPath, 'reports')">
+            <x-dashboard.sidebar-item href="{{ url('/reports') }}" label="Overview" icon="chart-pie" class="!py-2 !px-2" :active="request()->is('reports') || request()->is('reports/index')" />
+            <x-dashboard.sidebar-item href="{{ url('/reports/books') }}" label="Book Reports" icon="book-open" class="!py-2 !px-2" :active="request()->is('reports/books')" />
+            <x-dashboard.sidebar-item href="{{ url('/reports/members') }}" label="Member Reports" icon="users" class="!py-2 !px-2" :active="request()->is('reports/members')" />
+            <x-dashboard.sidebar-item href="{{ url('/reports/borrowings') }}" label="Borrowing Reports" icon="arrow-right-circle" class="!py-2 !px-2" :active="request()->is('reports/borrowings')" />
+            <x-dashboard.sidebar-item href="{{ url('/reports/fines') }}" label="Fine Reports" icon="exclamation-triangle" class="!py-2 !px-2" :active="request()->is('reports/fines')" />
         </x-dashboard.sidebar-group>
 
-        <x-dashboard.sidebar-group label="Security" icon="shield-check" :default-open="false">
-            <x-dashboard.sidebar-item href="#" label="Audit Logs" icon="clipboard-document-list" class="!py-2 !px-2" />
+        <x-dashboard.sidebar-group label="Security" icon="shield-check" :default-open="str_starts_with($currentPath, 'audit')">
+            <x-dashboard.sidebar-item href="{{ url('/audit') }}" label="Audit Logs" icon="clipboard-document-list" class="!py-2 !px-2" :active="request()->is('audit*')" />
         </x-dashboard.sidebar-group>
 
         <div class="pt-4 mt-4 border-t border-border dark:border-white/10 space-y-1">
-            <x-dashboard.sidebar-item href="#" icon="user-circle" label="Profile" />
-            <x-dashboard.sidebar-item href="#" icon="cog-6-tooth" label="Settings" />
+            <x-dashboard.sidebar-item href="{{ url('/profile') }}" icon="user-circle" label="Profile" :active="request()->is('profile*')" />
+            <x-dashboard.sidebar-item href="{{ url('/settings/general') }}" icon="cog-6-tooth" label="Settings" :active="request()->is('settings*')" />
             <x-dashboard.sidebar-item href="{{ url('/login') }}" icon="arrow-right-on-rectangle" label="Logout" />
         </div>
     </nav>

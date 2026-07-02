@@ -32,7 +32,7 @@
         <div class="bg-card dark:bg-secondary/50 border border-border dark:border-white/10 rounded-2xl p-4 shadow-soft">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div class="flex items-center gap-2">
-                    <x-ui.icon name="calendar" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
+                    <x-ui.icon name="clock" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
                     <span class="text-sm font-medium text-secondary dark:text-white">Date Range</span>
                 </div>
                 <div class="flex flex-wrap items-center gap-2">

@@ -23,7 +23,7 @@
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <x-dashboard.stat-card title="Total Titles" value="12,847" icon="book-open" color="primary" />
-            <x-dashboard.stat-card title="Most Borrowed" value="Clean Code" icon="fire" color="warning" />
+            <x-dashboard.stat-card title="Most Borrowed" value="Clean Code" icon="star" color="warning" />
             <x-dashboard.stat-card title="Avg. Circulation" value="4.2x" icon="arrow-path-rounded" trend="6.8%" :trend-up="true" color="success" />
             <x-dashboard.stat-card title="Low Stock Alerts" value="23" icon="exclamation-triangle" color="danger" />
         </div>

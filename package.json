@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "serve": "echo 'Gunakan: ./artisan-dev serve (terminal terpisah dari npm run dev)'"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

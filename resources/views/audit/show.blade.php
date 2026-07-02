@@ -40,7 +40,7 @@
                             color="primary"
                         />
                         <x-dashboard.timeline-item
-                            icon="document-text"
+                            icon="document-chart-bar"
                             title="Metadata saved"
                             description="Category: Self-Help, Shelf: C-03, Stock: 8 copies"
                             time="14:32:19"
@@ -54,7 +54,7 @@
                             color="primary"
                         />
                         <x-dashboard.timeline-item
-                            icon="clipboard-document-check"
+                            icon="clipboard-document-list"
                             title="Audit log recorded"
                             description="Event #{{ $log['id'] }} logged successfully"
                             time="14:32:18"
@@ -101,21 +101,21 @@
                 <x-shared.form-section title="Browser & Device">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3 p-3 bg-background dark:bg-white/5 rounded-xl">
-                            <x-ui.icon name="computer-desktop" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
+                            <x-ui.icon name="user-circle" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
                             <div>
                                 <p class="text-xs text-secondary/50 dark:text-white/50">Browser</p>
                                 <p class="text-sm font-medium text-secondary dark:text-white">{{ $log['browser'] }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-background dark:bg-white/5 rounded-xl">
-                            <x-ui.icon name="device-phone-mobile" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
+                            <x-ui.icon name="bell" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
                             <div>
                                 <p class="text-xs text-secondary/50 dark:text-white/50">Device</p>
                                 <p class="text-sm font-medium text-secondary dark:text-white">{{ $log['device'] }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-3 bg-background dark:bg-white/5 rounded-xl">
-                            <x-ui.icon name="map-pin" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
+                            <x-ui.icon name="globe-alt" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
                             <div>
                                 <p class="text-xs text-secondary/50 dark:text-white/50">Location</p>
                                 <p class="text-sm font-medium text-secondary dark:text-white">Jakarta, Indonesia</p>

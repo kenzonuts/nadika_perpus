@@ -23,7 +23,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-background dark:bg-white/5 rounded-xl border border-border dark:border-white/10">
                 <div class="flex items-start gap-4">
                     <div class="w-11 h-11 rounded-xl bg-warning/10 dark:bg-warning/20 flex items-center justify-center shrink-0">
-                        <x-ui.icon name="wrench-screwdriver" class="w-5 h-5 text-warning" />
+                        <x-ui.icon name="cog-6-tooth" class="w-5 h-5 text-warning" />
                     </div>
                     <div>
                         <p class="text-sm font-semibold text-secondary dark:text-white">Maintenance Mode</p>

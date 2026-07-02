@@ -22,7 +22,7 @@
 
                 <div class="flex items-center justify-end gap-3 pt-4">
                     <x-ui.button variant="primary" type="button">
-                        <x-ui.icon name="key" class="w-4 h-4" />
+                        <x-ui.icon name="lock-closed" class="w-4 h-4" />
                         Update Password
                     </x-ui.button>
                 </div>
@@ -86,7 +86,7 @@
                 ] as $session)
                     <div class="flex items-center justify-between gap-4 p-4 bg-background dark:bg-white/5 rounded-xl border border-border dark:border-white/10">
                         <div class="flex items-center gap-3">
-                            <x-ui.icon :name="$session['current'] ? 'computer-desktop' : 'device-phone-mobile'" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
+                            <x-ui.icon :name="$session['current'] ? 'user-circle' : 'bell'" class="w-5 h-5 text-secondary/50 dark:text-white/50" />
                             <div>
                                 <p class="text-sm font-medium text-secondary dark:text-white">
                                     {{ $session['device'] }}

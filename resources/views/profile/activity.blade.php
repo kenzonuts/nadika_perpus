@@ -19,7 +19,7 @@
                 <x-dashboard.timeline title="">
                     <x-dashboard.timeline-item icon="arrow-right-circle" title="Book borrowed" description="Borrowed Clean Code — due Jul 15, 2026" time="2 hours ago" color="primary" />
                     <x-dashboard.timeline-item icon="pencil-square" title="Profile updated" description="Changed phone number and bio" time="1 day ago" color="success" />
-                    <x-dashboard.timeline-item icon="key" title="Password changed" description="Account password was updated successfully" time="3 days ago" color="warning" />
+                    <x-dashboard.timeline-item icon="lock-closed" title="Password changed" description="Account password was updated successfully" time="3 days ago" color="warning" />
                     <x-dashboard.timeline-item icon="user-circle" title="Logged in" description="Signed in from Chrome on macOS" time="5 days ago" color="primary" />
                     <x-dashboard.timeline-item icon="document-chart-bar" title="Report exported" description="Exported borrowing report as PDF" time="1 week ago" color="success" />
                 </x-dashboard.timeline>
@@ -36,7 +36,7 @@
                             <div class="flex items-start justify-between gap-3">
                                 <div class="flex items-start gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center shrink-0">
-                                        <x-ui.icon :name="str_contains($session['os'], 'iOS') ? 'device-phone-mobile' : 'computer-desktop'" class="w-5 h-5 text-primary" />
+                                        <x-ui.icon :name="str_contains($session['os'], 'iOS') ? 'bell' : 'user-circle'" class="w-5 h-5 text-primary" />
                                     </div>
                                     <div>
                                         <div class="flex items-center gap-2">
