@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
+use App\Services\StatisticsService;
 use App\ViewModels\CategoryFormViewModel;
 use App\ViewModels\CategoryIndexViewModel;
 use Illuminate\Http\RedirectResponse;
@@ -15,12 +16,13 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index(CategoryService $service): View
+    public function index(CategoryService $service, StatisticsService $statistics): View
     {
         $categories = $service->paginate()->getCollection();
 
         return view('categories.index', [
             'categories' => (new CategoryIndexViewModel($categories))->toArray(),
+            'statCards' => $statistics->categoryStatCards(),
             'statuses' => ['active', 'inactive', 'draft'],
         ]);
     }

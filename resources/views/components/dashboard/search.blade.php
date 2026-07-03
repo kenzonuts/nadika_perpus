@@ -34,16 +34,7 @@
         </div>
 
         <div class="p-2">
-            <p class="px-3 py-2 text-xs font-medium text-secondary/40 dark:text-white/40 uppercase tracking-wider">Recent Searches</p>
-            @foreach (['Clean Code', 'John Mitchell', 'Overdue returns', 'Programming books'] as $recent)
-                <button
-                    type="button"
-                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-secondary/70 dark:text-white/70 hover:bg-background dark:hover:bg-white/5 transition-colors text-left"
-                >
-                    <x-ui.icon name="clock" class="w-4 h-4 text-secondary/30 dark:text-white/30" />
-                    {{ $recent }}
-                </button>
-            @endforeach
+            <p class="px-3 py-6 text-sm text-center text-secondary/50 dark:text-white/50">Search across books, members, and transactions.</p>
         </div>
     </div>
 </div>

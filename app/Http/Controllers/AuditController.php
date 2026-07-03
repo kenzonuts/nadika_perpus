@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Services\AuditService;
+use App\Services\StatisticsService;
 use App\ViewModels\AuditIndexViewModel;
 use Illuminate\View\View;
 use Spatie\Activitylog\Models\Activity;
 
 class AuditController extends Controller
 {
-    public function index(AuditService $service): View
+    public function index(AuditService $service, StatisticsService $statistics): View
     {
         $logs = $service->paginate();
 
-        return view('audit.index', (new AuditIndexViewModel($logs))->toArray());
+        return view('audit.index', array_merge(
+            (new AuditIndexViewModel($logs))->toArray(),
+            ['statCards' => $statistics->auditStatCards()]
+        ));
     }
 
     public function show(string $id): View

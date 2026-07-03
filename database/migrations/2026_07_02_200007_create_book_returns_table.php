@@ -15,6 +15,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignUuid('processed_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('borrowing_id');
             $table->index('returned_date');

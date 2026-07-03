@@ -6,11 +6,13 @@
         subtitle="No worries. Enter your email and we'll send you a reset link."
     >
         <form
+            method="POST"
+            action="{{ route('password.email') }}"
             x-data="formSubmit"
             @submit="submit"
             class="space-y-5"
-            novalidate
         >
+            @csrf
             <x-ui.input
                 label="Email address"
                 name="email"

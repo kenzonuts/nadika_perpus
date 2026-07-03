@@ -30,10 +30,9 @@
 
         {{-- Statistics --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Categories" value="24" icon="rectangle-stack" color="primary" />
-            <x-dashboard.stat-card title="Active Categories" value="18" icon="check-circle" color="success" />
-            <x-dashboard.stat-card title="Draft Categories" value="3" icon="pencil-square" color="warning" />
-            <x-dashboard.stat-card title="Books Categorized" value="1,728" icon="book-open" color="danger" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         {{-- Filters --}}

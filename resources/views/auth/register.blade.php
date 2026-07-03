@@ -64,7 +64,7 @@
                 required
             />
 
-            <x-ui.checkbox name="terms" id="terms" :checked="old('terms')" required>
+            <x-ui.checkbox name="terms" id="terms" :checked="(bool) old('terms')" required>
                 I agree to the
                 <a href="#" class="text-primary hover:underline">Terms of Service</a>
                 and

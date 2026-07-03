@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PasswordUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Services\ProfileService;
+use App\Services\StatisticsService;
 use App\ViewModels\ProfileViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,9 +25,14 @@ class ProfileController extends Controller
         return view('profile.security', (new ProfileViewModel($request->user()))->toArray());
     }
 
-    public function activity(Request $request): View
+    public function activity(Request $request, StatisticsService $statistics): View
     {
-        return view('profile.activity', (new ProfileViewModel($request->user()))->toArray());
+        return view('profile.activity', array_merge(
+            (new ProfileViewModel($request->user()))->toArray(),
+            [
+                'activityTimeline' => $statistics->recentActivity(8, $request->user()->id),
+            ]
+        ));
     }
 
     public function update(ProfileUpdateRequest $request, ProfileService $service): RedirectResponse

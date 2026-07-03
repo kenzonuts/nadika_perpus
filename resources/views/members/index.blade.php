@@ -34,10 +34,9 @@
 
         {{-- Statistics --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Members" value="2,847" icon="users" color="primary" trend="12%" :trend-up="true" />
-            <x-dashboard.stat-card title="Active Members" value="2,456" icon="check-circle" color="success" trend="8%" :trend-up="true" />
-            <x-dashboard.stat-card title="Currently Borrowing" value="342" icon="book-open" color="warning" />
-            <x-dashboard.stat-card title="Suspended / Expired" value="89" icon="exclamation-triangle" color="danger" trend="3%" :trend-up="false" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         {{-- Filters --}}

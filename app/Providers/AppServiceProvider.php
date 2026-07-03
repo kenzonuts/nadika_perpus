@@ -56,7 +56,9 @@ use App\Services\Cache\CacheServiceInterface;
 use App\Services\Settings\SettingsService as LegacySettingsService;
 use App\Services\Storage\StorageServiceInterface;
 use App\Services\Storage\SupabaseStorageService;
+use App\View\Composers\DashboardComposer;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -101,5 +103,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('reports.export', [ReportPolicy::class, 'export']);
         Gate::define('settings.view', [SettingsPolicy::class, 'view']);
         Gate::define('settings.update', [SettingsPolicy::class, 'update']);
+
+        View::composer(['layouts.dashboard', 'components.dashboard.notification-dropdown'], DashboardComposer::class);
     }
 }

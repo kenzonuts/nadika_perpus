@@ -8,6 +8,7 @@ use App\Http\Requests\StoreBorrowingRequest;
 use App\Http\Requests\UpdateBorrowingRequest;
 use App\Models\Borrowing;
 use App\Services\BorrowingService;
+use App\Services\StatisticsService;
 use App\ViewModels\BorrowingCreateViewModel;
 use App\ViewModels\BorrowingIndexViewModel;
 use App\ViewModels\BorrowingShowViewModel;
@@ -16,11 +17,16 @@ use Illuminate\View\View;
 
 class BorrowingController extends Controller
 {
-    public function index(): View
+    public function index(StatisticsService $statistics): View
     {
         $rows = Borrowing::query()->with(['member.user', 'items.book', 'bookReturns'])->latest()->get();
+        $borrowings = (new BorrowingIndexViewModel($rows))->toArray();
 
-        return view('borrowings.index', array_merge(['borrowings' => (new BorrowingIndexViewModel($rows))->toArray()], (new BorrowingCreateViewModel())->toArray()));
+        return view('borrowings.index', array_merge([
+            'borrowings' => $borrowings,
+            'statCards' => $statistics->borrowingStatCards(),
+            'totalBorrowings' => count($borrowings),
+        ], (new BorrowingCreateViewModel())->toArray()));
     }
 
     public function create(): View
@@ -52,10 +58,13 @@ class BorrowingController extends Controller
         return redirect()->route('borrowings.show', $borrowing);
     }
 
-    public function history(): View
+    public function history(StatisticsService $statistics): View
     {
         $rows = Borrowing::query()->with(['member.user', 'items.book', 'bookReturns'])->latest()->get();
 
-        return view('borrowings.history', array_merge(['borrowingHistory' => (new BorrowingIndexViewModel($rows))->toArray()], (new BorrowingCreateViewModel())->toArray()));
+        return view('borrowings.history', array_merge([
+            'borrowingHistory' => (new BorrowingIndexViewModel($rows))->toArray(),
+            'statCards' => $statistics->borrowingStatCards(),
+        ], (new BorrowingCreateViewModel())->toArray()));
     }
 }

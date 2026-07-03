@@ -1,14 +1,13 @@
+@props([
+    'stats' => [],
+])
+
 <section class="py-16 lg:py-20 bg-white border-y border-border">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
             class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
             x-data="{
-                stats: [
-                    { label: 'Total Books', value: 12847, icon: 'book', color: 'primary' },
-                    { label: 'Total Members', value: 3456, icon: 'users', color: 'success' },
-                    { label: 'Borrowed Books', value: 892, icon: 'arrow-path', color: 'warning' },
-                    { label: 'Late Returns', value: 23, icon: 'exclamation-triangle', color: 'danger' },
-                ],
+                stats: @js($stats),
                 counters: [0, 0, 0, 0],
                 animated: false,
                 init() {

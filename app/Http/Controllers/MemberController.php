@@ -8,6 +8,7 @@ use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use App\Models\Member;
 use App\Services\MemberService;
+use App\Services\StatisticsService;
 use App\ViewModels\MemberFormViewModel;
 use App\ViewModels\MemberIndexViewModel;
 use App\ViewModels\MemberShowViewModel;
@@ -16,11 +17,14 @@ use Illuminate\View\View;
 
 class MemberController extends Controller
 {
-    public function index(MemberService $service): View
+    public function index(MemberService $service, StatisticsService $statistics): View
     {
         $members = $service->paginate()->getCollection()->load('user');
 
-        return view('members.index', array_merge(['members' => (new MemberIndexViewModel($members))->toArray()], (new MemberFormViewModel())->toArray()));
+        return view('members.index', array_merge([
+            'members' => (new MemberIndexViewModel($members))->toArray(),
+            'statCards' => $statistics->memberStatCards(),
+        ], (new MemberFormViewModel())->toArray()));
     }
 
     public function create(): View
@@ -34,7 +38,7 @@ class MemberController extends Controller
         return redirect()->route('members.index');
     }
 
-    public function show(Member $member): View
+    public function show(Member $member, StatisticsService $statistics): View
     {
         $member->load(['user', 'borrowings.items.book']);
 
@@ -47,6 +51,7 @@ class MemberController extends Controller
                 'due_date' => $borrowing->due_date?->format('d M Y'),
                 'color' => $item->status->value === 'returned' ? 'success' : 'warning',
             ]))->all(),
+            'activityTimeline' => $statistics->subjectActivity($member, 5),
         ]);
     }
 

@@ -181,7 +181,7 @@
                 </x-shared.form-section>
 
                 <x-dashboard.timeline title="Borrow History">
-                    @foreach ($borrowHistory as $item)
+                    @forelse ($borrowHistory as $item)
                         @php
                             $icon = match ($item['action']) {
                                 'Borrowed' => 'arrow-right-circle',
@@ -197,14 +197,24 @@
                             :time="$item['date']"
                             :color="$item['color']"
                         />
-                    @endforeach
+                    @empty
+                        <p class="py-4 text-sm text-secondary/50 dark:text-white/50">No borrowing history yet.</p>
+                    @endforelse
                 </x-dashboard.timeline>
 
-                <x-dashboard.timeline title="Activity Timeline">
-                    <x-dashboard.timeline-item icon="plus-circle" title="Member registered" :description="'Joined as ' . $member['membership_type'] . ' member'" :time="$member['join_date']" color="primary" />
-                    <x-dashboard.timeline-item icon="pencil-square" title="Profile updated" description="Contact information was updated" time="Jun 15, 2026" color="warning" />
-                    <x-dashboard.timeline-item icon="arrow-right-circle" title="Book borrowed" description="Borrowed Clean Code" time="Jul 1, 2026" color="success" />
-                </x-dashboard.timeline>
+                @if (!empty($activityTimeline))
+                    <x-dashboard.timeline title="Activity Timeline">
+                        @foreach ($activityTimeline as $activity)
+                            <x-dashboard.timeline-item
+                                :icon="$activity['icon']"
+                                :title="$activity['title']"
+                                :description="$activity['description']"
+                                :time="$activity['time']"
+                                :color="$activity['color']"
+                            />
+                        @endforeach
+                    </x-dashboard.timeline>
+                @endif
             </div>
         </div>
     </div>

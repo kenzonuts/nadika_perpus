@@ -7,18 +7,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookReturnRequest;
 use App\Models\BookReturn;
 use App\Services\BookReturnService;
+use App\Services\StatisticsService;
 use App\ViewModels\BookReturnIndexViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class BookReturnController extends Controller
 {
-    public function index(): View
+    public function index(StatisticsService $statistics): View
     {
         $returns = BookReturn::query()->with(['borrowing.member.user', 'borrowing.items.book', 'items.borrowingItem.fine', 'processor'])->latest()->get();
 
         return view('returns.index', [
             'returns' => (new BookReturnIndexViewModel($returns))->toArray(),
+            'statCards' => $statistics->returnStatCards(),
             'conditionBadgeMap' => [
                 'good' => ['label' => 'Good', 'variant' => 'success'],
                 'damaged' => ['label' => 'Damaged', 'variant' => 'danger'],

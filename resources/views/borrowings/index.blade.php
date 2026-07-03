@@ -30,10 +30,9 @@
 
         {{-- Statistics --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Borrowings" value="1,247" icon="arrow-right-circle" color="primary" trend="12%" :trend-up="true" />
-            <x-dashboard.stat-card title="Active Loans" value="892" icon="book-open" color="success" />
-            <x-dashboard.stat-card title="Overdue" value="34" icon="exclamation-triangle" color="danger" trend="3" :trend-up="false" />
-            <x-dashboard.stat-card title="Returned This Month" value="156" icon="arrow-left-circle" color="warning" trend="8%" :trend-up="true" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         {{-- Filters --}}
@@ -125,6 +124,6 @@
             </div>
         </div>
 
-        <x-books.pagination :current="1" :total="3" :total-items="24" />
+        <x-books.pagination :current="1" :total="max(1, (int) ceil($totalBorrowings / 15))" :total-items="$totalBorrowings" />
     </div>
 @endsection

@@ -22,10 +22,9 @@
         </x-shared.page-toolbar>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Events" value="10,842" icon="clipboard-document-list" color="primary" />
-            <x-dashboard.stat-card title="Warnings" value="47" icon="exclamation-triangle" color="warning" />
-            <x-dashboard.stat-card title="Critical" value="8" icon="exclamation-triangle" color="danger" />
-            <x-dashboard.stat-card title="Today's Events" value="156" icon="clock" trend="12%" :trend-up="true" color="success" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         <x-shared.filter-toolbar placeholder="Search by user, action, or IP...">

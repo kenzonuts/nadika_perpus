@@ -21,10 +21,9 @@
         </x-shared.page-toolbar>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Members" value="3,456" icon="users" trend="8.2%" :trend-up="true" color="primary" />
-            <x-dashboard.stat-card title="New This Month" value="142" icon="plus-circle" trend="15.3%" :trend-up="true" color="success" />
-            <x-dashboard.stat-card title="Active Borrowers" value="1,892" icon="arrow-right-circle" color="warning" />
-            <x-dashboard.stat-card title="Suspended" value="12" icon="x-circle" color="danger" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         <x-shared.filter-toolbar placeholder="Search members...">

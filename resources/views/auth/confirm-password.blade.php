@@ -6,11 +6,13 @@
         subtitle="This is a secure area. Please confirm your password before continuing."
     >
         <form
+            method="POST"
+            action="{{ route('password.confirm.store') }}"
             x-data="formSubmit"
             @submit="submit"
             class="space-y-5"
-            novalidate
         >
+            @csrf
             <x-ui.password-input
                 label="Password"
                 name="password"

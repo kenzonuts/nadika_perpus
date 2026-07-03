@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('late_days')->default(0);
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('book_return_id');
             $table->index('borrowing_item_id');

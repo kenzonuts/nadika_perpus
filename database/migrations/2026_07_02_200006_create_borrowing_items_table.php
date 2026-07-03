@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('status')->default('borrowed');
             $table->timestamp('returned_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('borrowing_id');
             $table->index('book_id');

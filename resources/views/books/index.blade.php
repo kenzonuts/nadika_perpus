@@ -38,10 +38,9 @@
 
         {{-- Statistics --}}
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Books" value="12,847" icon="book-open" color="primary" />
-            <x-dashboard.stat-card title="Available Books" value="10,234" icon="check-circle" color="success" />
-            <x-dashboard.stat-card title="Borrowed Books" value="892" icon="arrow-right-circle" color="warning" />
-            <x-dashboard.stat-card title="Archived Books" value="156" icon="archive-box" color="danger" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         {{-- Filters --}}

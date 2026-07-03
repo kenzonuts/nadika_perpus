@@ -1,10 +1,5 @@
 @php
-    $notifications = [
-        ['title' => 'New book added', 'message' => 'Clean Architecture was added to the catalog', 'time' => '2 min ago', 'unread' => true],
-        ['title' => 'Overdue return', 'message' => 'John Mitchell has an overdue book', 'time' => '15 min ago', 'unread' => true],
-        ['title' => 'New member registered', 'message' => 'Sarah Chen joined the library', 'time' => '1 hour ago', 'unread' => true],
-        ['title' => 'Report generated', 'message' => 'Monthly borrowing report is ready', 'time' => '3 hours ago', 'unread' => false],
-    ];
+    $notifications = $notifications ?? [];
     $unreadCount = collect($notifications)->where('unread', true)->count();
 @endphp
 
@@ -36,28 +31,29 @@
     >
         <div class="flex items-center justify-between px-4 py-3 border-b border-border dark:border-white/10">
             <h3 class="text-sm font-semibold text-secondary dark:text-white">Notifications</h3>
-            <button type="button" class="text-xs font-medium text-primary hover:text-primary-dark transition-colors">Mark all read</button>
         </div>
 
         <div class="max-h-80 overflow-y-auto">
-            @foreach ($notifications as $notification)
+            @forelse ($notifications as $notification)
                 <button
                     type="button"
-                    class="w-full flex items-start gap-3 px-4 py-3 hover:bg-background dark:hover:bg-white/5 transition-colors text-left {{ $notification['unread'] ? 'bg-primary/5 dark:bg-primary/10' : '' }}"
+                    class="w-full flex items-start gap-3 px-4 py-3 hover:bg-background dark:hover:bg-white/5 transition-colors text-left {{ ($notification['unread'] ?? false) ? 'bg-primary/5 dark:bg-primary/10' : '' }}"
                     role="menuitem"
                 >
-                    <div class="w-2 h-2 mt-2 rounded-full shrink-0 {{ $notification['unread'] ? 'bg-primary' : 'bg-transparent' }}"></div>
+                    <div class="w-2 h-2 mt-2 rounded-full shrink-0 {{ ($notification['unread'] ?? false) ? 'bg-primary' : 'bg-transparent' }}"></div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-secondary dark:text-white">{{ $notification['title'] }}</p>
-                        <p class="text-xs text-secondary/50 dark:text-white/50 mt-0.5 truncate">{{ $notification['message'] }}</p>
+                        <p class="text-xs text-secondary/50 dark:text-white/50 mt-0.5 truncate">{{ $notification['message'] ?? $notification['description'] }}</p>
                         <p class="text-xs text-secondary/40 dark:text-white/40 mt-1">{{ $notification['time'] }}</p>
                     </div>
                 </button>
-            @endforeach
+            @empty
+                <p class="px-4 py-8 text-sm text-center text-secondary/50 dark:text-white/50">No notifications yet.</p>
+            @endforelse
         </div>
 
         <div class="px-4 py-3 border-t border-border dark:border-white/10">
-            <a href="#" class="block text-center text-sm font-medium text-primary hover:text-primary-dark transition-colors">View all notifications</a>
+            <a href="{{ route('audit.index') }}" class="block text-center text-sm font-medium text-primary hover:text-primary-dark transition-colors">View audit log</a>
         </div>
     </div>
 </div>

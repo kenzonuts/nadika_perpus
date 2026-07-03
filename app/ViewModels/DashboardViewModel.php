@@ -10,15 +10,18 @@ final class DashboardViewModel
 
     public function toArray(): array
     {
+        $stats = $this->payload['stats'] ?? [];
+
         return [
             'overviewStats' => [
-                ['title' => 'Books', 'value' => (string) ($this->payload['stats']['books'] ?? 0), 'icon' => 'book-open', 'trend' => '+0%', 'trendUp' => true, 'color' => 'primary'],
-                ['title' => 'Members', 'value' => (string) ($this->payload['stats']['members'] ?? 0), 'icon' => 'users', 'trend' => '+0%', 'trendUp' => true, 'color' => 'success'],
-                ['title' => 'Active Loans', 'value' => (string) ($this->payload['stats']['active_borrowings'] ?? 0), 'icon' => 'clock', 'trend' => '0%', 'trendUp' => true, 'color' => 'warning'],
-                ['title' => 'Unpaid Fines', 'value' => '$'.number_format((float) ($this->payload['stats']['unpaid_fines'] ?? 0), 2), 'icon' => 'currency-dollar', 'trend' => '0%', 'trendUp' => false, 'color' => 'danger'],
+                ['title' => 'Total Books', 'value' => number_format((int) ($stats['books'] ?? 0)), 'icon' => 'book-open', 'trend' => '0%', 'trendUp' => true, 'color' => 'primary'],
+                ['title' => 'Total Members', 'value' => number_format((int) ($stats['members'] ?? 0)), 'icon' => 'users', 'trend' => '0%', 'trendUp' => true, 'color' => 'success'],
+                ['title' => 'Borrowed Books', 'value' => number_format((int) ($stats['active_borrowings'] ?? 0)), 'icon' => 'arrow-right-circle', 'trend' => '0%', 'trendUp' => false, 'color' => 'warning'],
+                ['title' => 'Late Returns', 'value' => number_format((int) ($stats['overdue_borrowings'] ?? 0)), 'icon' => 'exclamation-triangle', 'trend' => '0%', 'trendUp' => false, 'color' => 'danger'],
             ],
             'bookReports' => $this->payload['popularBooks'] ?? [],
             'borrowingReports' => $this->payload['recentBorrowings'] ?? [],
+            'recentActivity' => $this->payload['recentActivity'] ?? [],
         ];
     }
 }

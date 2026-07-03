@@ -90,7 +90,7 @@
                 </div>
 
                 <x-dashboard.timeline title="Borrow History">
-                    @foreach ($borrowHistory as $item)
+                    @forelse ($borrowHistory as $item)
                         <x-dashboard.timeline-item
                             :icon="$item['action'] === 'Borrowed' ? 'arrow-right-circle' : 'arrow-left-circle'"
                             :title="$item['member']"
@@ -98,14 +98,24 @@
                             :time="$item['date']"
                             :color="$item['color']"
                         />
-                    @endforeach
+                    @empty
+                        <p class="py-4 text-sm text-secondary/50 dark:text-white/50">No borrow history yet.</p>
+                    @endforelse
                 </x-dashboard.timeline>
 
-                <x-dashboard.timeline title="Activity Timeline">
-                    <x-dashboard.timeline-item icon="plus-circle" title="Book created" description="Added to catalog by Admin User" time="Jan 15, 2026" color="primary" />
-                    <x-dashboard.timeline-item icon="pencil-square" title="Book updated" description="Stock quantity updated to {{ $book['stock'] }}" time="{{ $book['updated_at'] }}" color="warning" />
-                    <x-dashboard.timeline-item icon="arrow-right-circle" title="Book borrowed" description="Last borrowed by John Mitchell" time="Jul 1, 2026" color="success" />
-                </x-dashboard.timeline>
+                @if (!empty($activityTimeline))
+                    <x-dashboard.timeline title="Activity Timeline">
+                        @foreach ($activityTimeline as $activity)
+                            <x-dashboard.timeline-item
+                                :icon="$activity['icon']"
+                                :title="$activity['title']"
+                                :description="$activity['description']"
+                                :time="$activity['time']"
+                                :color="$activity['color']"
+                            />
+                        @endforeach
+                    </x-dashboard.timeline>
+                @endif
             </div>
         </div>
     </div>

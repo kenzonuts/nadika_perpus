@@ -6,11 +6,11 @@ namespace App\Services;
 
 use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticationService extends BaseService
 {
-    public function __construct(private readonly UserRepositoryInterface $users, private readonly StatefulGuard $guard) {}
+    public function __construct(private readonly UserRepositoryInterface $users) {}
 
     public function register(array $attributes)
     {
@@ -24,13 +24,13 @@ class AuthenticationService extends BaseService
         $user->assignRole('member');
 
         event(new Registered($user));
-        $this->guard->login($user);
+        Auth::login($user);
 
         return $user;
     }
 
     public function logout(): void
     {
-        $this->guard->logout();
+        Auth::logout();
     }
 }

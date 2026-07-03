@@ -5,11 +5,11 @@
 
     <main>
         <x-landing.hero />
-        <x-landing.statistics />
+        <x-landing.statistics :stats="$landingStats" />
         <x-landing.features />
-        <x-landing.dashboard-preview />
+        <x-landing.dashboard-preview :stats="$landingStats" :activity="$landingActivity" />
         <x-landing.how-it-works />
-        <x-landing.popular-books />
+        <x-landing.popular-books :books="$landingBooks" />
         <x-landing.security />
         <x-landing.testimonials />
         <x-landing.cta />

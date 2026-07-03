@@ -8,6 +8,7 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Services\BookService;
+use App\Services\StatisticsService;
 use App\ViewModels\BookFormViewModel;
 use App\ViewModels\BookIndexViewModel;
 use App\ViewModels\BookShowViewModel;
@@ -17,12 +18,13 @@ use Illuminate\View\View;
 
 class BookController extends Controller
 {
-    public function index(BookService $service): View
+    public function index(BookService $service, StatisticsService $statistics): View
     {
         $books = $service->paginate()->getCollection()->load(['category', 'shelf']);
 
         return view('books.index', [
             'books' => (new BookIndexViewModel($books))->toArray(),
+            'statCards' => $statistics->bookStatCards(),
             'categories' => $books->pluck('category.name')->filter()->unique()->values()->all(),
             'publishers' => $books->pluck('publisher')->filter()->unique()->values()->all(),
             'authors' => $books->pluck('author')->filter()->unique()->values()->all(),
@@ -40,7 +42,7 @@ class BookController extends Controller
         return redirect()->route('books.index');
     }
 
-    public function show(Book $book): View
+    public function show(Book $book, StatisticsService $statistics): View
     {
         $book->load(['category', 'shelf', 'borrowingItems.borrowing.member.user']);
 
@@ -52,6 +54,7 @@ class BookController extends Controller
                 'date' => $item->created_at?->diffForHumans() ?? '-',
                 'color' => $item->status->value === 'returned' ? 'success' : 'warning',
             ])->all(),
+            'activityTimeline' => $statistics->subjectActivity($book, 5),
         ]);
     }
 

@@ -6,11 +6,14 @@
         subtitle="Enter your new password below to regain access to your account."
     >
         <form
+            method="POST"
+            action="{{ route('password.store') }}"
             x-data="formSubmit"
             @submit="submit"
             class="space-y-5"
-            novalidate
         >
+            @csrf
+            <input type="hidden" name="token" value="{{ $request->route('token') ?? '' }}">
             <x-ui.input
                 label="Email address"
                 name="email"

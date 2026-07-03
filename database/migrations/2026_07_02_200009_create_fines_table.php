@@ -17,6 +17,7 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->foreignUuid('waived_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index('borrowing_item_id');
             $table->index('status');

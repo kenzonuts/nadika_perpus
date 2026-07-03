@@ -21,10 +21,9 @@
         </x-shared.page-toolbar>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <x-dashboard.stat-card title="Total Collected" value="Rp 18.5M" icon="document-chart-bar" trend="22.1%" :trend-up="true" color="success" />
-            <x-dashboard.stat-card title="Outstanding" value="Rp 2.4M" icon="exclamation-triangle" color="danger" />
-            <x-dashboard.stat-card title="Avg. Fine Amount" value="Rp 32,500" icon="chart-bar" color="warning" />
-            <x-dashboard.stat-card title="Waived This Month" value="Rp 450K" icon="check-circle" color="primary" />
+            @foreach ($statCards as $stat)
+                <x-dashboard.stat-card :title="$stat['title']" :value="$stat['value']" :icon="$stat['icon']" :color="$stat['color']" />
+            @endforeach
         </div>
 
         <x-shared.filter-toolbar placeholder="Search fines...">
